@@ -2,8 +2,10 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('test/', views.test, name='test'),
-    path('plan-trip/', views.plan_trip, name='plan-trip'),
-    path('trips/', views.list_trips, name='list-trips'),
-    path('trips/<int:trip_id>/', views.get_trip, name='get-trip'),
+    path('test/', views.test),
+    path('plan-trip/', views.plan_trip),
+    path('trips/', views.list_trips),
+    path('trips/history/', views.get_trip_history),  # New endpoint
+    path('trips/<int:trip_id>/', views.get_trip),
 ]
+
