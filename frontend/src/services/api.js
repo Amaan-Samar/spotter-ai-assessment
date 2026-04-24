@@ -1,14 +1,23 @@
 import axios from 'axios';
 
 // Use local backend URL (Django running on port 8000)
-const API_URL = 'http://localhost:8000/api';
+// const API_URL = 'http://localhost:8000/api';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
 
 const api = axios.create({
   baseURL: API_URL,
+  timeout: 30000,
   headers: {
     'Content-Type': 'application/json',
   },
 });
+
+// const api = axios.create({
+//   baseURL: API_URL,
+//   headers: {
+//     'Content-Type': 'application/json',
+//   },
+// });
 
 export const planTrip = async (tripData) => {
   const response = await api.post('/plan-trip/', tripData);
