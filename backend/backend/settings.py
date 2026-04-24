@@ -239,3 +239,21 @@ CORS_ALLOW_HEADERS = [
     'x-csrftoken',
     'x-requested-with',
 ]
+
+# PythonAnywhere settings
+import os
+
+# Static files configuration
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+# Media files
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# CORS for PythonAnywhere
+CORS_ALLOW_ALL_ORIGINS = True  # For demo
+CORS_ALLOW_CREDENTIALS = True
+
+# Allow PythonAnywhere domain
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.pythonanywhere.com']
