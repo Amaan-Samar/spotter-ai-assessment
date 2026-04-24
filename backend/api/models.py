@@ -7,7 +7,7 @@ class Trip(models.Model):
     cycle_used_start = models.FloatField()
     created_at = models.DateTimeField(auto_now_add=True)
     
-    # Calculated fields (populated after planning)
+    # Calculated fields
     total_miles = models.FloatField(null=True, blank=True)
     total_driving_hours = models.FloatField(null=True, blank=True)
     total_on_duty_hours = models.FloatField(null=True, blank=True)
@@ -18,34 +18,15 @@ class Trip(models.Model):
         return f"Trip {self.id}: {self.current_location} → {self.dropoff_location}"
 
 class TripDay(models.Model):
-    STATUS_CHOICES = [
-        ('off_duty', 'Off Duty'),
-        ('sleeper', 'Sleeper Berth'),
-        ('driving', 'Driving'),
-        ('on_duty', 'On Duty (Not Driving)'),
-    ]
-    
     trip = models.ForeignKey(Trip, on_delete=models.CASCADE, related_name='days')
     day_number = models.IntegerField()
     date = models.DateField()
     driving_hours = models.FloatField()
-    on_duty_not_driving_hours = models.FloatField()
-    off_duty_hours = models.FloatField()
-    sleeper_hours = models.FloatField()
+    on_duty_hours = models.FloatField()
     total_miles = models.FloatField()
-    start_location = models.CharField(max_length=200)
-    end_location = models.CharField(max_length=200)
-    log_entries = models.JSONField(default=list)  # Stores the 24-hour schedule
+    start_location = models.CharField(max_length=200, blank=True)
+    end_location = models.CharField(max_length=200, blank=True)
+    log_entries = models.JSONField(default=list)
     
     def __str__(self):
         return f"Trip {self.trip.id} - Day {self.day_number}"
-
-class FuelStop(models.Model):
-    trip = models.ForeignKey(Trip, on_delete=models.CASCADE, related_name='fuel_stops')
-    miles_from_start = models.FloatField()
-    location = models.CharField(max_length=200)
-    latitude = models.FloatField(null=True, blank=True)
-    longitude = models.FloatField(null=True, blank=True)
-    
-    def __str__(self):
-        return f"Fuel stop at {self.miles_from_start} miles"

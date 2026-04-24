@@ -5,6 +5,7 @@ import ELDLog from './components/ELDLog';
 import TripSummary from './components/TripSummary';
 import CycleTracker from './components/CycleTracker';
 import { planTrip } from './services/api';
+import 'leaflet/dist/leaflet.css';
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -76,6 +77,7 @@ function App() {
                 routeGeometry={tripData.route_geometry}
                 pickup={tripData.days[0]?.start_location || 'Pickup'}
                 dropoff={tripData.days[tripData.days.length - 1]?.end_location || 'Dropoff'}
+                fuelStops={tripData.fuel_stops || []}
               />
             </div>
 
